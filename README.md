@@ -1,9 +1,9 @@
-Autonomous Financial Research Workstation
+🤖 Autonomous Financial Research Workstation
 This project is a sophisticated multi-agent system designed to automate the entire financial research process. Given a company ticker and a research topic, the system autonomously gathers, analyzes, and synthesizes both qualitative and quantitative data to generate a comprehensive, data-driven report complete with visualizations.
 
 The architecture is a modular monolith, orchestrated by LangGraph, ensuring a clean separation of concerns while maintaining the simplicity of a single application.
 
-Features
+✨ Features
 Multi-Agent Architecture: Utilizes a team of specialized AI agents (e.g., Researcher, Analyst, Chart Generator) that collaborate to perform complex tasks.
 
 Parallel Data Gathering: Simultaneously fetches unstructured news articles and structured financial data to maximize efficiency.
@@ -16,7 +16,7 @@ Automated Visualizations: Dynamically generates and embeds relevant charts (e.g.
 
 End-to-End Automation: From a single query, the system handles everything from data discovery to saving the final, polished Markdown report.
 
-Architecture & Workflow
+⚙️ Architecture & Workflow
 The system is orchestrated by LangGraph as a state machine. The workflow proceeds as follows:
 
 Initiation: The user provides a company ticker (e.g., NVDA) and a research topic.
@@ -37,7 +37,7 @@ A Chart_Generator agent uses Matplotlib to create and save chart images based on
 
 A final Report_Writer agent compiles the analysis and embeds the chart images into a single, clean Markdown file.
 
-Technology Stack
+🛠️ Technology Stack
 Orchestration: LangGraph
 
 AI Framework: LangChain
@@ -58,10 +58,9 @@ Core Language: Python
 
 Package Management: uv
 
-Setup and Installation
+🚀 Setup and Installation
 1. Clone the Repository
-
-git clone <your-repository-url>
+git clone https://github.com/harushua/Autonomous-Financial-Research-Workstation.git
 cd autonomous-financial-workstation
 
 2. Set Up the Environment
@@ -98,14 +97,14 @@ FIRECRAWL_API_KEY="fc-..."
 # Get from https://polygon.io/
 POLYGON_API_KEY="..."
 
-How to Run
+▶️ How to Run
 Execute the main.py script from the root directory to start the research process.
 
 python main.py
 
 The workflow will run, printing its progress to the console. Upon completion, a financial_report.md file and an outputs directory containing the chart images will be saved in your project folder.
 
-Project Structure
+📂 Project Structure
 autonomous-financial-workstation/
 ├── .env
 ├── main.py                 # Main entry point to run the application
