@@ -1,11 +1,14 @@
-# Python-generated files
+# Environment
+.env
+
+# Python
 __pycache__/
-*.py[oc]
-build/
-dist/
-wheels/
-*.egg-info
+*.pyc
+.venv/
+venv/
 
-# Virtual environments
-.venv
+# VS Code
+.vscode/
 
+# Outputs - Optional, but good practice
+outputs/
