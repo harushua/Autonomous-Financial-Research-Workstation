@@ -1,126 +1,97 @@
-🤖 Autonomous Financial Research Workstation
-This project is a sophisticated multi-agent system designed to automate the entire financial research process. Given a company ticker and a research topic, the system autonomously gathers, analyzes, and synthesizes both qualitative and quantitative data to generate a comprehensive, data-driven report complete with visualizations.
 
-The architecture is a modular monolith, orchestrated by LangGraph, ensuring a clean separation of concerns while maintaining the simplicity of a single application.
+# 🤖 Autonomous Financial Research Workstation
 
-✨ Features
-Multi-Agent Architecture: Utilizes a team of specialized AI agents (e.g., Researcher, Analyst, Chart Generator) that collaborate to perform complex tasks.
+Automate financial research with a multi-agent AI system. Provide a company ticker and research topic—get a comprehensive, data-driven report with charts and sources.
 
-Parallel Data Gathering: Simultaneously fetches unstructured news articles and structured financial data to maximize efficiency.
+---
 
-Advanced Hybrid Search: Implements a powerful Retrieval-Augmented Generation (RAG) pipeline using a hybrid of BM25 (keyword) and FAISS (semantic) search for highly relevant context.
+## Features
 
-Source-Cited Analysis: The lead analyst agent provides a detailed report (Executive Summary, SWOT, Outlook) and cites the source URL for every claim it makes.
+- **Multi-Agent Collaboration:** Specialized agents (Researcher, Analyst, Chart Generator) work together.
+- **Parallel Data Gathering:** Fetches news and financial data simultaneously.
+- **Hybrid Search:** Combines BM25 (keyword) and FAISS (semantic) for relevant context.
+- **Source-Cited Analysis:** Every claim is cited with its source URL.
+- **Automated Visuals:** Generates and embeds charts in the report.
+- **End-to-End Automation:** From query to polished Markdown report in one run.
 
-Automated Visualizations: Dynamically generates and embeds relevant charts (e.g., Quarterly Revenue) directly into the final report.
+---
 
-End-to-End Automation: From a single query, the system handles everything from data discovery to saving the final, polished Markdown report.
+## Architecture & Workflow
 
-⚙️ Architecture & Workflow
-The system is orchestrated by LangGraph as a state machine. The workflow proceeds as follows:
+1. **User Input:** Company ticker (e.g., `NVDA`) and research topic.
+2. **Parallel Data Gathering:**
+    - *Qualitative:* Web search (Tavily) → Web scrape (Firecrawl) → Index (FAISS/BM25)
+    - *Quantitative:* Financial data fetch (Polygon.io)
+3. **Sync:** Wait for both arms to finish.
+4. **Analysis:** Lead Analyst agent synthesizes and cites findings.
+5. **Report Generation:**
+    - Chart Generator creates images (Matplotlib)
+    - Report Writer compiles everything into Markdown
 
-Initiation: The user provides a company ticker (e.g., NVDA) and a research topic.
+---
 
-Parallel Data Gathering:
+## Tech Stack
 
-Qualitative Arm (News Desk): A Web_Searcher agent uses Tavily to find relevant URLs, which are then passed to a Web_Scraper that uses Firecrawl to extract the full article content. The content is then indexed by an Indexer into a hybrid FAISS/BM25 retriever.
+- LangGraph (orchestration)
+- LangChain (AI framework)
+- OpenAI GPT-4o (LLM)
+- Tavily Search (web search)
+- Firecrawl (web scraping)
+- Polygon.io (financial data)
+- FAISS, rank-bm25 (search)
+- Matplotlib (charts)
+- Python
+- uv (package management)
 
-Quantitative Arm (Quant Desk): A Financial_Data_Fetcher agent uses the Polygon.io API to retrieve financial statements, historical data, and ticker-specific news.
+---
 
-Synchronization: A joiner node waits for both parallel branches to complete before proceeding.
+## Quickstart
 
-Synthesis & Analysis: A Lead_Analyst agent receives the hybrid retriever and the structured financial data. It performs RAG to generate a detailed analysis and identify key metrics for visualization.
-
-Report Generation:
-
-A Chart_Generator agent uses Matplotlib to create and save chart images based on the analyst's findings.
-
-A final Report_Writer agent compiles the analysis and embeds the chart images into a single, clean Markdown file.
-
-🛠️ Technology Stack
-Orchestration: LangGraph
-
-AI Framework: LangChain
-
-LLM: OpenAI GPT-4o
-
-Web Search: Tavily Search
-
-Web Scraping: Firecrawl
-
-Financial Data API: Polygon.io
-
-Vector Store / Search: FAISS (for semantic search), rank-bm25 (for keyword search)
-
-Data Visualization: Matplotlib
-
-Core Language: Python
-
-Package Management: uv
-
-🚀 Setup and Installation
-1. Clone the Repository
+```sh
+# 1. Clone
 git clone https://github.com/harushua/Autonomous-Financial-Research-Workstation.git
 cd autonomous-financial-workstation
 
-2. Set Up the Environment
-This project uses uv for package management.
-
-# Create a virtual environment
+# 2. Environment
 python -m venv .venv
+# Activate:
+#   Windows: .venv\Scripts\activate
+#   Mac/Linux: source .venv/bin/activate
 
-# Activate the environment
-# On Windows:
-.venv\Scripts\activate
-# On macOS/Linux:
-source .venv/bin/activate
-
-3. Install Dependencies
-Install all required packages from the requirements.txt file.
-
+# 3. Install dependencies
 uv pip install -r requirements.txt
 
-4. Configure API Keys
-Create a .env file in the root of the project and add your API keys.
+# 4. Add API keys (.env in project root)
+# Example:
+# OPENAI_API_KEY="sk-..."
+# TAVILY_API_KEY="tvly-..."
+# FIRECRAWL_API_KEY="fc-..."
+# POLYGON_API_KEY="..."
 
-# .env
-
-# Get from https://platform.openai.com/
-OPENAI_API_KEY="sk-..."
-
-# Get from https://app.tavily.com/
-TAVILY_API_KEY="tvly-..."
-
-# Get from https://firecrawl.dev/
-FIRECRAWL_API_KEY="fc-..."
-
-# Get from https://polygon.io/
-POLYGON_API_KEY="..."
-
-▶️ How to Run
-Execute the main.py script from the root directory to start the research process.
-
+# 5. Run
 python main.py
+```
 
-The workflow will run, printing its progress to the console. Upon completion, a financial_report.md file and an outputs directory containing the chart images will be saved in your project folder.
+Output: Markdown report and charts in the `outputs/` folder.
 
-📂 Project Structure
+---
+
+## Project Structure
+
+```text
 autonomous-financial-workstation/
-├── .env
-├── main.py                 # Main entry point to run the application
-├── requirements.txt        # Project dependencies
-├── outputs/                # Directory for generated charts and reports
+├── main.py
+├── requirements.txt
+├── outputs/
 │   ├── quarterly_revenue.png
 │   └── financial_report.md
 └── workstation/
-    ├── __init__.py
-    ├── components/         # Reusable, self-contained logic modules
-    │   ├── __init__.py
+    ├── components/
     │   ├── analyst.py
     │   ├── charting.py
     │   ├── financials.py
     │   └── retriever.py
-    └── graph/              # LangGraph state and workflow definition
-        ├── __init__.py
+    └── graph/
         ├── builder.py
         └── state.py
+```
